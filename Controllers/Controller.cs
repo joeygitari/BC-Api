@@ -2,6 +2,7 @@
 using BC_Api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BC_Api.Controllers
 {
@@ -24,6 +25,13 @@ namespace BC_Api.Controllers
         {
             var response = await _seminar.PostData(seminarData);
             return Ok(response);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllSeminars()
+        {
+            var seminars = await _seminarService.GetSeminarsAsync();
+            return Ok(seminars);
         }
     }
 }

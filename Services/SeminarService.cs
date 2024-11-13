@@ -6,6 +6,7 @@ using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using BC_Api.Interfaces;
 using BC_Api.Models;
+using System.Text.Json;
 
 namespace BC_Api.Services
 {
@@ -13,6 +14,8 @@ namespace BC_Api.Services
     {
         private readonly HttpClient _httpClient = httpClient;
         private readonly IConfiguration _config = configuration;
+        private readonly string serviceRoot = "http://jo:7048/BC240/ODataV4/Company('CRONUS%20International%20Ltd.')";
+
         public async Task<dynamic> PostData(SeminarData seminar)
         {
             try
@@ -26,6 +29,23 @@ namespace BC_Api.Services
                 return ex.Message;
             }
         }
+
+        public async Task<List<GetSeminarData>> GetSeminarsAsync()
+        {
+            var url = $"{serviceRoot}/SeminarList";
+            var response = await _httpClient.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var jsonData = JsonDocument.Parse(jsonString);
+                var seminars = jsonData.RootElement.GetProperty("value");
+
+                return System.Text.Json.JsonSerializer.Deserialize<List<GetSeminarData>>(seminars.ToString());
+            }
+
+            return new List<GetSeminarData>();
+        }
     }
     public class SeminarData
     {
@@ -35,5 +55,10 @@ namespace BC_Api.Services
         public int Minimum_Participants { get; set; }
         public int Maximum_Participants { get; set; }
 
+    }
+    public class GetSeminarData
+    {
+        public string Name { get; set; }
+        public decimal Seminar_Duration { get; set; }
     }
 }
