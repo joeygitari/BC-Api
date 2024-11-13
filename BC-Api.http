@@ -1,0 +1,6 @@
+@BC_Api_HostAddress = http://localhost:5187
+
+GET {{BC_Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
