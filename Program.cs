@@ -18,6 +18,14 @@ builder.Services.AddHttpClient<SeminarService>()
 builder.Services.AddScoped<ISeminar, SeminarService>();
 builder.Services.AddSingleton<Credentials>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy => policy.WithOrigins("http://localhost:3000")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,11 +34,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHttpsRedirection();
+}
 
+app.UseCors("AllowReactApp");
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
