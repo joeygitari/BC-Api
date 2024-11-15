@@ -30,6 +30,20 @@ namespace BC_Api.Services
             }
         }
 
+        public async Task<dynamic> DeleteData(DeleteSeminarData deletedSeminar)
+        {
+            try
+            {
+                var client = credentials.ObjNav();
+                await client.DeleteSeminarDataAsync(deletedSeminar.DocNo);
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
         public async Task<List<GetSeminarData>> GetSeminarsAsync()
         {
             var url = $"{serviceRoot}/SeminarList";
@@ -46,6 +60,20 @@ namespace BC_Api.Services
 
             return new List<GetSeminarData>();
         }
+
+        public async Task<dynamic> UpdateSeminar(UpdateSeminarData updatedSeminar)
+        {
+            try
+            {
+                var client = credentials.ObjNav();
+                await client.UpdateSeminarDataAsync(updatedSeminar.DocNo, updatedSeminar.Name, updatedSeminar.Seminar_Duration);
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
     }
     public class SeminarData
     {
@@ -60,5 +88,15 @@ namespace BC_Api.Services
     {
         public string Name { get; set; }
         public decimal Seminar_Duration { get; set; }
+    }
+    public class UpdateSeminarData
+    {
+        public string DocNo { get; set; }
+        public string Name { get; set; }
+        public decimal Seminar_Duration { get; set; }
+    }
+    public class DeleteSeminarData
+    {
+        public string DocNo { get; set; }
     }
 }

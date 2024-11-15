@@ -6,7 +6,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using BC_Api.Models;
-using Microsoft.Win32;
 
 namespace BC_Api.Controllers
 {
@@ -34,7 +33,6 @@ namespace BC_Api.Controllers
 
             if (result.Succeeded)
             {
-                //await _userManager.AddToRoleAsync(user, "User");
                 return Ok(new { message = "User registered successfully" });
             }
 
@@ -68,7 +66,41 @@ namespace BC_Api.Controllers
 
             }
             return Unauthorized();
+        }
 
+        [HttpPost("add-role")]
+        public async Task<IActionResult> AddRole([FromBody] string role)
+        {
+            if (!await _roleManager.RoleExistsAsync(role))
+            {
+                var result = await _roleManager.CreateAsync(new IdentityRole(role));
+                if (result.Succeeded)
+                {
+                    return Ok(new { message = "Role added successfully" });
+                }
+
+                return BadRequest(result.Errors);
+            }
+
+            return BadRequest("Role already exists");
+        }
+
+        [HttpPost("assign-role")]
+        public async Task<IActionResult> AssignRole([FromBody] UserRole model)
+        {
+            var user = await _userManager.FindByNameAsync(model.Username!);
+            if (user == null)
+            {
+                return BadRequest("User not found");
+            }
+
+            var result = await _userManager.AddToRoleAsync(user, model.Role!);
+            if (result.Succeeded)
+            {
+                return Ok(new { message = "Role assigned successfully" });
+            }
+
+            return BadRequest(result.Errors);
         }
     }
 }
