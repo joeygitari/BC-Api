@@ -65,8 +65,8 @@ builder.Services.AddSwaggerGen(swagger =>
     swagger.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "ASP.NET Core Web API E-Commerce",
-        Description = "ITI Project"
+        Title = "ASP.NET Core Web API",
+        Description = "CRUD operations on BC"
     });
 
     swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()

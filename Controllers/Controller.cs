@@ -28,7 +28,6 @@ namespace BC_Api.Controllers
         public async Task<IActionResult> PostDataToBc(SeminarData seminarData)
         {
             var response = await _seminar.PostData(seminarData);
-            //return Ok(response);
             return Ok(new
             {
                 Success = true,

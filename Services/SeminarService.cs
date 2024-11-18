@@ -52,6 +52,7 @@ namespace BC_Api.Services
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
+
                 var jsonData = JsonDocument.Parse(jsonString);
                 var seminars = jsonData.RootElement.GetProperty("value");
 
@@ -86,6 +87,7 @@ namespace BC_Api.Services
     }
     public class GetSeminarData
     {
+        public string No { get; set; }
         public string Name { get; set; }
         public decimal Seminar_Duration { get; set; }
     }
