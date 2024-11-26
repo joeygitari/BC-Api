@@ -16,19 +16,35 @@ namespace BC_Api.Services
         private readonly IConfiguration _config = configuration;
         private readonly string serviceRoot = "http://jo:7048/BC240/ODataV4/Company('CRONUS%20International%20Ltd.')";
 
+        //public async Task<dynamic> PostData(SeminarData seminar)
+        //{
+        //    try
+        //    {
+        //        var client = credentials.ObjNav();
+        //        await client.InsertSeminarDataAsync(seminar.DocNo, seminar.Name, seminar.Seminar_Duration, seminar.Minimum_Participants, seminar.Maximum_Participants);
+        //        return "";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ex.Message;
+        //    }
+        //}
         public async Task<dynamic> PostData(SeminarData seminar)
         {
             try
             {
                 var client = credentials.ObjNav();
-                await client.InsertSeminarDataAsync(seminar.DocNo, seminar.Name, seminar.Seminar_Duration, seminar.Minimum_Participants, seminar.Maximum_Participants);
-                return "";
+                await client.InsertSeminarDataAsync(seminar.Name, seminar.Seminar_Duration, seminar.Minimum_Participants, seminar.Maximum_Participants);
+                return new { Success = true, Message = "Seminar added successfully." };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                // Log the error for debugging purposes
+                Console.WriteLine($"Error: {ex.Message}");
+                return new { Success = false, Message = $"Failed to add seminar. Error: {ex.Message}" };
             }
         }
+
 
         public async Task<dynamic> DeleteData(DeleteSeminarData deletedSeminar)
         {
@@ -78,7 +94,7 @@ namespace BC_Api.Services
     }
     public class SeminarData
     {
-        public string DocNo { get; set; }
+        //public string DocNo { get; set; }
         public string Name { get; set; }
         public decimal Seminar_Duration { get; set; }
         public int Minimum_Participants { get; set; }
@@ -90,6 +106,7 @@ namespace BC_Api.Services
         public string No { get; set; }
         public string Name { get; set; }
         public decimal Seminar_Duration { get; set; }
+        public int Seminar_Price { get; set; }
     }
     public class UpdateSeminarData
     {

@@ -15,7 +15,6 @@ namespace BC_Api.Models
         // Constructor to initialize IConfiguration and HttpClient
         public Credentials(ILogger<Credentials> logger, IConfiguration configuration)
         {
-            //_logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
 
             var handler = new HttpClientHandler

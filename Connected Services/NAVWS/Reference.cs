@@ -125,27 +125,23 @@ namespace NAVWS
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:microsoft-dynamics-schemas/codeunit/PortalIntegration", Order=0)]
-        public string docNo;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:microsoft-dynamics-schemas/codeunit/PortalIntegration", Order=1)]
         public string name;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:microsoft-dynamics-schemas/codeunit/PortalIntegration", Order=2)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:microsoft-dynamics-schemas/codeunit/PortalIntegration", Order=1)]
         public decimal seminar_Duration;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:microsoft-dynamics-schemas/codeunit/PortalIntegration", Order=3)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:microsoft-dynamics-schemas/codeunit/PortalIntegration", Order=2)]
         public int minimum_Participants;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:microsoft-dynamics-schemas/codeunit/PortalIntegration", Order=4)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn:microsoft-dynamics-schemas/codeunit/PortalIntegration", Order=3)]
         public int maximum_Participants;
         
         public InsertSeminarData()
         {
         }
         
-        public InsertSeminarData(string docNo, string name, decimal seminar_Duration, int minimum_Participants, int maximum_Participants)
+        public InsertSeminarData(string name, decimal seminar_Duration, int minimum_Participants, int maximum_Participants)
         {
-            this.docNo = docNo;
             this.name = name;
             this.seminar_Duration = seminar_Duration;
             this.minimum_Participants = minimum_Participants;
@@ -314,10 +310,9 @@ namespace NAVWS
             return base.Channel.InsertSeminarData(request);
         }
         
-        public void InsertSeminarData(string docNo, string name, decimal seminar_Duration, int minimum_Participants, int maximum_Participants)
+        public void InsertSeminarData(string name, decimal seminar_Duration, int minimum_Participants, int maximum_Participants)
         {
             NAVWS.InsertSeminarData inValue = new NAVWS.InsertSeminarData();
-            inValue.docNo = docNo;
             inValue.name = name;
             inValue.seminar_Duration = seminar_Duration;
             inValue.minimum_Participants = minimum_Participants;
@@ -331,10 +326,9 @@ namespace NAVWS
             return base.Channel.InsertSeminarDataAsync(request);
         }
         
-        public System.Threading.Tasks.Task<NAVWS.InsertSeminarData_Result> InsertSeminarDataAsync(string docNo, string name, decimal seminar_Duration, int minimum_Participants, int maximum_Participants)
+        public System.Threading.Tasks.Task<NAVWS.InsertSeminarData_Result> InsertSeminarDataAsync(string name, decimal seminar_Duration, int minimum_Participants, int maximum_Participants)
         {
             NAVWS.InsertSeminarData inValue = new NAVWS.InsertSeminarData();
-            inValue.docNo = docNo;
             inValue.name = name;
             inValue.seminar_Duration = seminar_Duration;
             inValue.minimum_Participants = minimum_Participants;

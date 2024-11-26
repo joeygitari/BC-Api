@@ -16,12 +16,16 @@ namespace BC_Api.Controllers
         private readonly SeminarService _seminarService;
         private readonly ISeminar _seminar;
         private readonly AppDbContext dBContext;
+        private readonly CustomerService _customerService;
+        private readonly EmployeeService _employeeService;
         // Constructor
-        public SeminarController(SeminarService seminarService, ISeminar seminar, AppDbContext dbContext)
+        public SeminarController(SeminarService seminarService, ISeminar seminar, AppDbContext dbContext, CustomerService customerService, EmployeeService employeeService)
         {
             _seminarService = seminarService;
             _seminar = seminar;
             this.dBContext = dbContext;
+            _customerService = customerService;
+            _employeeService = employeeService;
         }
         
         [HttpPost("posttobc")]
@@ -66,7 +70,5 @@ namespace BC_Api.Controllers
                 Message = "Seminar updated successfully."
             });
         }
-
-        
     }
 }
